@@ -15,7 +15,7 @@ def run_game():
     )
     pygame.display.set_caption("Alien")
 
-    ship = Ship(screen)
+    ship = Ship(game_settings, screen)
 
     while True:
         gf.check_events(ship)
