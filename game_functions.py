@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from bullet import Bullet
+from enemy import Enemy
 
 
 def check_keydown_events(event, game_settings, screen, ship, bullets):
@@ -62,7 +63,39 @@ def update_bullets(bullets):
             bullets.remove(bullet)
 
 
-def update_screen(game_settings, screen, ship, bullets, enemy):
+def get_number_enemies_x(game_settings, enemy_width):
+    """Determine the number of enemies that fit in a row"""
+
+    available_space_x = game_settings.screen_width - (2 * enemy_width)
+    number_enemies_x = int(available_space_x / (2 * enemy_width))
+
+    return number_enemies_x
+
+
+def create_enemy(game_settings, screen, enemies, enemy_number):
+    """Create an enemy and place it in the row"""
+
+    enemy = Enemy(game_settings, screen)
+    enemy_width = enemy.rect.width
+    enemy.x = enemy_width + 2 * enemy_width * enemy_number
+    enemy.rect.x = enemy.x
+    enemies.add(enemy)
+
+
+def create_fleet(game_settings, screen, enemies):
+    """Create a enemy fleet"""
+
+    # Create an enemy and find the number of enemies that fits in a row
+    # Space between each enemy is equal to one enemy width
+    enemy = Enemy(game_settings, screen)
+    number_enemies_x = get_number_enemies_x(game_settings, enemy.rect.width)
+
+    # Create the first row of enemies
+    for enemy_number in range(number_enemies_x):
+        create_enemy(game_settings, screen, enemies, enemy_number)
+
+
+def update_screen(game_settings, screen, ship, bullets, enemies):
     """Update images on the screen and flip to the new screen"""
 
     # Redraw the screen during each pass through the loop
@@ -73,6 +106,6 @@ def update_screen(game_settings, screen, ship, bullets, enemy):
         bullet.draw_bullet()
 
     ship.blitme()
-    enemy.blitme()
+    enemies.draw(screen)
 
     pygame.display.flip()
