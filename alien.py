@@ -1,7 +1,6 @@
-import sys
-
 import pygame
 
+import game_functions as gf
 from settings import Settings
 from ship import Ship
 
@@ -19,13 +18,8 @@ def run_game():
     ship = Ship(screen)
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
-        screen.fill(game_settings.bg_color)
-        ship.blitme()
-        pygame.display.flip()
+        gf.check_events(ship)
+        gf.update_screen(game_settings, screen, ship)
 
 
 run_game()
