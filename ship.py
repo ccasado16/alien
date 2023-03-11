@@ -9,6 +9,10 @@ class Ship:
 
         self.screen = screen
 
+        # Movement flags
+        self.moving_right = False
+        self.moving_left = False
+
         # Load ship's image and resize it
         self.image = pygame.image.load("images/rocket.png")
         width, height = self.image.get_size()
@@ -23,6 +27,14 @@ class Ship:
         # Start each new ship at the bottom center of the screen
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
+
+    def update(self):
+        """Update ship's position based on the movement flag"""
+
+        if self.moving_right:
+            self.rect.centerx += 1
+        if self.moving_left:
+            self.rect.centerx -= 1
 
     def blitme(self):
         """Draw the ship at its current location"""
