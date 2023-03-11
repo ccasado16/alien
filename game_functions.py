@@ -8,7 +8,9 @@ from bullet import Bullet
 def check_keydown_events(event, game_settings, screen, ship, bullets):
     """Respond to keypresses"""
 
-    if event.key == pygame.K_LEFT:  # Left arrow key
+    if event.key == pygame.K_q:  # Q key
+        sys.exit()
+    elif event.key == pygame.K_LEFT:  # Left arrow key
         ship.moving_left = True
     elif event.key == pygame.K_RIGHT:  # Right arrow key
         ship.moving_right = True
