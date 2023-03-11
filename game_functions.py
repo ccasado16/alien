@@ -42,6 +42,18 @@ def check_events(game_settings, screen, ship, bullets):
             check_keyup_events(event, ship)
 
 
+def update_bullets(bullets):
+    """Update bullets' position and deleting old ones"""
+
+    # Update bullets' position
+    bullets.update()
+
+    # Remove bullets that have disappeared
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+
+
 def update_screen(game_settings, screen, ship, bullets):
     """Update images on the screen and flip to the new screen"""
 
