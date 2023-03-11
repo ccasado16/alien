@@ -107,6 +107,29 @@ def create_fleet(game_settings, screen, enemies, ship):
             create_enemy(game_settings, screen, enemies, enemy_number, row_number)
 
 
+def update_enemies(game_settings, enemies):
+    """Check if fleet is at the edge of the winow and update the positions of all enemies in the fleet"""
+    check_fleet_edges(game_settings, enemies)
+    enemies.update()
+
+
+def check_fleet_edges(game_settings, enemies):
+    """Respond appropriately if any enemies have reached an edge"""
+
+    for enemy in enemies.sprites():
+        if enemy.check_edges():
+            change_fleet_direction(game_settings, enemies)
+            break
+
+
+def change_fleet_direction(game_settings, enemies):
+    """Drop the entire fleet and change the fleet's direction"""
+
+    for enemy in enemies.sprites():
+        enemy.rect.y += game_settings.fleet_drop_speed
+    game_settings.fleet_direction *= -1
+
+
 def update_screen(game_settings, screen, ship, bullets, enemies):
     """Update images on the screen and flip to the new screen"""
 
