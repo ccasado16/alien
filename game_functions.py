@@ -14,8 +14,9 @@ def check_keydown_events(event, game_settings, screen, ship, bullets):
         ship.moving_right = True
     elif event.key == pygame.K_SPACE:  # Spacebar key
         # Create bullet and add it to the bullets group
-        new_bullet = Bullet(game_settings, screen, ship)
-        bullets.add(new_bullet)
+        if len(bullets) < game_settings.bullets_allowed:
+            new_bullet = Bullet(game_settings, screen, ship)
+            bullets.add(new_bullet)
 
 
 def check_keyup_events(event, ship):
