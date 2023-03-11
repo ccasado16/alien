@@ -72,27 +72,39 @@ def get_number_enemies_x(game_settings, enemy_width):
     return number_enemies_x
 
 
-def create_enemy(game_settings, screen, enemies, enemy_number):
+def get_number_rows(game_settings, ship_height, enemy_height):
+    """Determine the number of rows of enemies that fit on the screen"""
+
+    available_space_y = game_settings.screen_height - (3 * enemy_height) - ship_height
+    number_rows = int(available_space_y / (5 * enemy_height))
+
+    return number_rows
+
+
+def create_enemy(game_settings, screen, enemies, enemy_number, row_number):
     """Create an enemy and place it in the row"""
 
     enemy = Enemy(game_settings, screen)
     enemy_width = enemy.rect.width
     enemy.x = enemy_width + 2 * enemy_width * enemy_number
     enemy.rect.x = enemy.x
+    enemy.rect.y = enemy.rect.height + 2 * enemy.rect.height * row_number
     enemies.add(enemy)
 
 
-def create_fleet(game_settings, screen, enemies):
+def create_fleet(game_settings, screen, enemies, ship):
     """Create a enemy fleet"""
 
     # Create an enemy and find the number of enemies that fits in a row
     # Space between each enemy is equal to one enemy width
     enemy = Enemy(game_settings, screen)
     number_enemies_x = get_number_enemies_x(game_settings, enemy.rect.width)
+    number_rows = get_number_rows(game_settings, ship.rect.height, enemy.rect.height)
 
-    # Create the first row of enemies
-    for enemy_number in range(number_enemies_x):
-        create_enemy(game_settings, screen, enemies, enemy_number)
+    # Create enemy fleet
+    for row_number in range(number_rows):
+        for enemy_number in range(number_enemies_x):
+            create_enemy(game_settings, screen, enemies, enemy_number, row_number)
 
 
 def update_screen(game_settings, screen, ship, bullets, enemies):

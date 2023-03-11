@@ -22,7 +22,7 @@ def run_game():
     enemies = Group()
 
     # Create ememy fleet
-    gf.create_fleet(game_settings, screen, enemies)
+    gf.create_fleet(game_settings, screen, enemies, ship)
 
     while True:
         gf.check_events(game_settings, screen, ship, bullets)
