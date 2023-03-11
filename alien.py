@@ -1,8 +1,9 @@
-import sys
-
 import pygame
+from pygame.sprite import Group
 
+import game_functions as gf
 from settings import Settings
+from ship import Ship
 
 
 def run_game():
@@ -15,14 +16,16 @@ def run_game():
     )
     pygame.display.set_caption("Alien")
 
+    # Make the ship
+    ship = Ship(game_settings, screen)
+    # Make a group to store bullets
+    bullets = Group()
+
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
-        screen.fill(game_settings.bg_color)
-
-        pygame.display.flip()
+        gf.check_events(game_settings, screen, ship, bullets)
+        ship.update()
+        gf.update_bullets(bullets)
+        gf.update_screen(game_settings, screen, ship, bullets)
 
 
 run_game()
