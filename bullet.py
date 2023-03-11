@@ -21,7 +21,7 @@ class Bullet(Sprite):
         # Store the bullet's position as a decimal value
         self.y = float(self.rect.y)
 
-        self.color = game_settings.bullet_colo
+        self.color = game_settings.bullet_color
         self.speed_factor = game_settings.bullet_speed_factor
 
     def update(self):
