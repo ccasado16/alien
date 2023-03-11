@@ -76,7 +76,7 @@ def get_number_rows(game_settings, ship_height, enemy_height):
     """Determine the number of rows of enemies that fit on the screen"""
 
     available_space_y = game_settings.screen_height - (3 * enemy_height) - ship_height
-    number_rows = int(available_space_y / (5 * enemy_height))
+    number_rows = int(available_space_y / (8 * enemy_height))
 
     return number_rows
 
